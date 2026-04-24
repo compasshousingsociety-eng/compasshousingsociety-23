@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Real Estate · Arock</title>
+
+    <!-- Global & Bootstrap -->
+    <link rel="stylesheet" href="globalstyles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #0B2D72;
+            --accent: #FFD150;
+            --white: #ffffff;
+            --black: #000000;
+            --light-bg: #f8fafd;
+        }
+
+
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Roboto", "Open Sans", Arial, sans-serif;
+            background: var(--white);
+            /* color: var(--primary); */
+        }
+
+
+        .section {
+            margin-bottom: 55px;
+        }
+
+        /* TYPOGRAPHY */
+        h1 {
+            font-size: 44px;
+        }
+
+        h2 {
+            font-size: 34px;
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
+        h4 {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        h5,
+        h6 {
+            font-size: 18px;
+        }
+
+        p,
+        span {
+            font-size: 16px;
+        }
+
+        a,
+        li {
+            font-size: 16px;
+        }
+
+        /* WATERMARK (kept) */
+        .watermark {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 200px;
+            color: var(--primary);
+            opacity: 0.04;
+            pointer-events: none;
+            font-weight: 700;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            margin: auto;
+            background-image: url("images/transparent-logo-1.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 600px auto;
+            opacity: 0.10;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        :root[data-theme="dark"]::before {
+            background-image: url("images/transparent-logo-1.png");
+            opacity: 0.10;
+        }
+
+        :root[data-theme="dark"] .recent-card {
+            background-color: var(--black);
+        }
+
+        :root[data-theme="dark"] .packages-left {
+            background-color: var(--black);
+        }
+
+        :root[data-theme="dark"] .feature-card {
+            background-color: var(--black);
+        }
+
+
+        /* original "why" section */
+        .why {
+            display: flex;
+            gap: 35px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+
+        .why-left {
+            flex: 1;
+            min-width: 280px;
+        }
+
+        .why-left p {
+            margin-top: 10px;
+            /* color: var(--black); */
+            max-width: 480px;
+        }
+
+        .stats {
+            display: flex;
+            gap: 35px;
+            margin-top: 35px;
+            flex-wrap: wrap;
+        }
+
+
+
+        .why-right {
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .feature-card {
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 14px;
+            padding: 18px;
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            transition: all 0.2s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 20px rgba(11, 45, 114, 0.2);
+        }
+
+        /* ---- FIXED YELLOW BOXES (now with colorful icons) ---- */
+        .feature-card .icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        /* DESTINATIONS */
+        .section-header p {
+            margin-top: 5px;
+            /* color: var(--black); */
+        }
+
+        .destination-row {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        /* IMAGE CARDS (with corrected image links from google) */
+        .image-card {
+            position: relative;
+            flex: 1;
+            min-width: 180px;
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+            transition: 0.3s;
+        }
+
+        .image-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 20px 25px -8px rgba(11, 45, 114, 0.3);
+        }
+
+        .image-card img {
+            width: 100%;
+            height: 240px;
+            object-fit: cover;
+            display: block;
+        }
+
+        .overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top, rgba(11, 45, 114, 0.9), transparent 70%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+        }
+
+        /* PACKAGES */
+        .packages-grid {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .packages-left {
+            flex: 1.3;
+            min-width: 260px;
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 28px;
+            padding: 35px 20px;
+            box-shadow: 0 20px 25px -5px rgba(11, 45, 114, 0.2);
+        }
+
+        .packages-left p {
+            margin-top: 10px;
+            opacity: 0.9;
+        }
+
+        .packages-left a {
+            display: inline-block;
+            margin-top: 20px;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            border-bottom: 2px solid transparent;
+        }
+
+        .packages-left a:hover {
+            border-bottom-color: var(--accent);
+        }
+
+        /* ADDED SECTION: simple recent adventures (replaces previous "different" one) */
+        .recent-row {
+            display: flex;
+            gap: 24px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .recent-card {
+            flex: 1 1 220px;
+            background: var(--white);
+            border-radius: 24px;
+            padding: 18px;
+            box-shadow: 0 10px 18px rgba(11, 45, 114, 0.05);
+            border: 1px solid rgba(255, 209, 80, 0.3);
+            text-align: center;
+            transition: 0.2s;
+        }
+
+        .recent-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+
+        .recent-card i {
+            font-size: 32px;
+            color: var(--accent);
+            padding: 14px;
+            border-radius: 50px;
+            margin-bottom: 22px;
+        }
+
+        .recent-card h5 {
+            margin: 8px 0 4px;
+        }
+
+        .recent-card span {
+            /* color: var(--black); */
+            font-size: 15px;
+        }
+
+        /* NEW STYLES FOR CENTERING AND VERTICAL PADDING */
+        .page {
+         
+            padding: 35px;
+        }
+
+        .section {
+            margin-bottom: 55px;
+            width: 100%;
+        }
+
+        .why,
+        .destination-row,
+        .packages-grid,
+        .recent-row {
+            justify-content: center;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .why-left {
+            text-align: left;
+        }
+
+        .why-right {
+            margin: 0 auto;
+        }
+
+        .packages-grid {
+            align-items: stretch;
+        }
+
+        .recent-row {
+            justify-content: center;
+        }
+    </style>
+
+</head>
+
+<body data-theme="light">
+
+    <div id="site-header" class="fixed-top"></div>
+
+    <div class="page">
+        <!-- ========== ORIGINAL "WHY THOUSANDS" SECTION (intact, but yellow boxes now have icons) ========== -->
+        <section class="section why">
+            <div class="why-left">
+                <h1>Why Thousands of Travelers Choose</h1>
+                <h2>WANDER For Their Trip Adventures</h2>
+                <p>From pristine beaches to cultural hotspots, we make exploring the world effortless and exciting with
+                    expert-crafted itineraries.</p>
+                <p>Whether you're dreaming of a relaxing escape, an adventurous journey, or a cultural discovery, we
+                    curate
+                    travel experiences designed to match your unique interests and preferences. Every trip is
+                    thoughtfully
+                    planned to ensure comfort, convenience, and unforgettable memories.</p>
+                <div class="stats">
+                    <div class="stat">
+                        <h3>12K</h3><span>Happy Clients</span>
+                    </div>
+                    <div class="stat">
+                        <h3>10yrs</h3><span>Travel Experience</span>
+                    </div>
+                    <div class="stat">
+                        <h3>50+</h3><span>Popular Destinations</span>
+                    </div>
+                </div>
+            </div>
+            <div class="why-right">
+                <!-- yellow boxes now filled with meaningful emoji / icons -->
+                <div class="feature-card">
+                    <div class="icon">✈️</div>
+                    <div>
+                        <h5>Exclusive Expertise</h5>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">🏨</div>
+                    <div>
+                        <h5>All-in-One Booking</h5>
+                    </div>
+                </div>
+                <div class="feature-card">
+                    <div class="icon">📞</div>
+                    <div>
+                        <h5>24/7 Support</h5>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== ORIGINAL DESTINATIONS (with FIXED image links from google) ========== -->
+        <section class="section destinations">
+            <div class="section-header">
+                <h2>Top Destinations</h2>
+                <p>Discover hand-picked locations across the world.</p>
+            </div>
+            <div class="destination-row">
+                <!-- each image now uses a reliable / different unsplash image to avoid broken links -->
+                <div class="image-card"><img
+                        src="https://images.unsplash.com/photo-1537996194471-e657df975ab4?w=400&h=300&fit=crop"
+                        alt="Bali">
+                    <div class="overlay">
+                        <h6>Bali</h6><span>Tropical Paradise</span>
+                    </div>
+                </div>
+                <div class="image-card"><img
+                        src="https://images.unsplash.com/photo-1582653291997-079a1c04e5a1?w=400&h=300&fit=crop"
+                        alt="Bogota">
+                    <div class="overlay">
+                        <h6>Bogota City</h6><span>Urban Adventure</span>
+                    </div>
+                </div>
+                <div class="image-card"><img
+                        src="https://images.unsplash.com/photo-1514282401047-d79a71a590e8?w=400&h=300&fit=crop"
+                        alt="Maldives">
+                    <div class="overlay">
+                        <h6>Maldives</h6><span>Luxury Escape</span>
+                    </div>
+                </div>
+                <div class="image-card"><img
+                        src="https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?w=400&h=300&fit=crop"
+                        alt="Kerala">
+                    <div class="overlay">
+                        <h6>Kerala</h6><span>Nature & Culture</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== ORIGINAL PACKAGES (intact) ========== -->
+        <section class="section packages">
+            <div class="packages-grid">
+                <div class="packages-left">
+                    <h2>Tour Packages</h2>
+                    <p>Adventure, relaxation & curated journeys.</p><a href="#">Browse all packages</a>
+                </div>
+                <div class="image-card"><img
+                        src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=400&h=300&fit=crop"
+                        alt="Island Hopper">
+                    <div class="overlay">
+                        <h6>Island Hopper</h6><span>Multi-Destination</span>
+                    </div>
+                </div>
+                <div class="image-card"><img
+                        src="https://images.unsplash.com/photo-1482192596544-9eb780fc7f66?w=400&h=300&fit=crop"
+                        alt="Northern Lights">
+                    <div class="overlay">
+                        <h6>Northern Lights</h6><span>Arctic Experience</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NEW SIMPLE SECTION (replaces previous "different" one) ========== -->
+        <section class="section">
+            <div class="section-header">
+                <h2>Recent adventures</h2>
+                <p>Fresh experiences from our community</p>
+            </div>
+            <div class="recent-row">
+                <div class="recent-card"><i class="bi bi-umbrella"></i>
+                    <h3>Beach hopping</h3><span>Thailand · 6 days</span>
+                </div>
+                <div class="recent-card"><i class="bi bi-tree"></i>
+                    <h3>Rainforest trek</h3><span>Costa Rica · 4 days</span>
+                </div>
+                <div class="recent-card"><i class="bi bi-building"></i>
+                    <h3>City escape</h3><span>Tokyo · 5 days</span>
+                </div>
+                <div class="recent-card"><i class="bi bi-snow2"></i>
+                    <h3>Alpine ski</h3><span>Swiss alps · 7 days</span>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div id="side-footer"></div>
+    <script src="footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="header.js"></script>
+</body>
+
+</html>

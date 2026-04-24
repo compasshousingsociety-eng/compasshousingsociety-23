@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Real Estate · Arock</title>
+
+    <!-- Global & Bootstrap -->
+    <link rel="stylesheet" href="globalstyles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        body {
+            font-family: "Roboto", "Open Sans", Arial, sans-serif;
+        }
+
+        /* ------ BACKGROUND WATERMARK LOGO – preserved, refined ------ */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            margin: auto;
+            background-image: url("images/transparent-logo-1.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 600px auto;
+            opacity: 0.10;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        :root[data-theme="dark"] body::before {
+            background-image: url("images/transparent-logo-1.png");
+            opacity: 0.12;
+            /* slightly richer in dark mode */
+        }
+
+        /* ------ MODERN TYPOGRAPHY – crisp, white in dark mode ------ */
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span,
+        li,
+        a {
+            transition: color 0.2s;
+        }
+
+        h1 {
+            font-size: 44px;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+        }
+
+        h2 {
+            font-size: 34px;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+
+        h3 {
+            font-size: 24px;
+        }
+
+        h4 {
+            font-size: 23px;
+            font-weight: 700;
+        }
+
+        h5 {
+            font-size: 18px;
+        }
+
+        p,
+        span,
+        li,
+        a {
+            font-size: 16px;
+            font-weight: 400;
+        }
+
+        .section-subhead {
+            font-size: 18px;
+            color: var(--primary);
+            opacity: 0.8;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        /* ------ DARK MODE TEXT COLOR RULES: white text, yellow headings ------ */
+        :root[data-theme="dark"] body,
+        :root[data-theme="dark"] p,
+        :root[data-theme="dark"] span,
+        :root[data-theme="dark"] li,
+        :root[data-theme="dark"] #site-header,
+        :root[data-theme="dark"] #side-footer {
+            /* background-color: var(--white); */
+            color: var(--white);
+        }
+
+        :root[data-theme="dark"] h1,
+        :root[data-theme="dark"] h2,
+        :root[data-theme="dark"] h3,
+        :root[data-theme="dark"] h4,
+        :root[data-theme="dark"] h5,
+        :root[data-theme="dark"] h6,
+        :root[data-theme="dark"] .hero-box h1,
+        :root[data-theme="dark"] .locations-header h2,
+        :root[data-theme="dark"] .location-card-body h4,
+        :root[data-theme="dark"] .features-row h6,
+        :root[data-theme="dark"] .faq-right-box .faq-item-modern h6 {
+            color: var(--white) !important;
+        }
+
+        :root[data-theme="dark"] .logo {
+            color: var(--secondary) !important;
+        }
+
+
+
+        .location-card,
+        .dark-strip,
+        .faq-right-box {
+            backdrop-filter: blur(2px);
+        }
+
+
+
+        /* ------ HERO – minimal, bold, centered ------ */
+        .hero-box {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-box p {
+            font-size: 16px;
+            margin-bottom: 15px;
+            opacity: 0.85;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--primary);
+            color: #ffffff;
+            padding: 14px 26px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 16px;
+            border: 2px solid transparent;
+            text-decoration: none;
+        }
+
+
+
+        /* ------ LOCATIONS – premium cards, modernized ------ */
+        .locations-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .location-card {
+            border-radius: var(--radius-card);
+            background: var(--white);
+            border: 1px solid rgba(11, 45, 114, 0.08);
+            transition: var(--transition);
+            box-shadow: var(--card-shadow);
+            overflow: hidden;
+        }
+
+        .location-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--secondary);
+            box-shadow: 0 30px 50px -15px rgba(11, 45, 114, 0.2);
+        }
+
+        .location-card img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+            transition: transform 0.6s;
+        }
+
+        .location-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .location-card-body {
+            padding: 26px 20px;
+            text-align: center;
+        }
+
+        .location-card-body span {
+            display: inline-block;
+            background: rgba(255, 209, 80, 0.18);
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--primary);
+            border: 1px solid rgba(11, 45, 114, 0.05);
+        }
+
+        /* dark mode card text fine-tuning */
+        :root[data-theme="dark"] .location-card-body span {
+            color: var(--secondary);
+            background: rgba(255, 209, 80, 0.12);
+            border-color: rgba(255, 209, 80, 0.3);
+        }
+
+        /* ------ TALENT SECTION – asymmetrical, dynamic ------ */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 60px;
+        }
+
+        @media (max-width: 900px) {
+            .split-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .split-images {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .split-images img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 20px;
+            box-shadow: var(--card-shadow);
+            border: 2px solid var(--white);
+            transition: 0.4s;
+        }
+
+        .split-images img:first-child {
+            transform: translateY(20px);
+        }
+
+        .split-images img:last-child {
+            transform: translateY(-20px);
+        }
+
+        .features-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-top: 40px;
+        }
+
+        .features-row div {
+            background: rgba(11, 45, 114, 0.02);
+            padding: 20px 18px;
+            border-radius: 18px;
+            border-left: 4px solid var(--secondary);
+            transition: 0.2s;
+        }
+
+        .features-row div:hover {
+            background: rgba(255, 209, 80, 0.1);
+            border-left-width: 6px;
+        }
+
+        .features-row h6 {
+            color: var(--primary);
+            font-weight: 700;
+            font-size: 18px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .features-row p {
+            font-size: 16px;
+            margin: 0;
+            opacity: 0.7;
+        }
+
+        /* dark mode feature cards text white */
+        :root[data-theme="dark"] .features-row p {
+            color: rgba(255, 255, 255, 0.8) !important;
+        }
+
+        :root[data-theme="dark"] .hero-btn {
+            background: #FFD150;
+            color: #000;
+        }
+
+        /* ------ DARK STRIP – FAQ ------ */
+        .dark-strip {
+            background: var(--primary);
+            color: var(--white);
+            border-radius: 40px;
+            padding: 70px 60px;
+            box-shadow: inset 0 0 0 1px rgba(255, 209, 80, 0.2);
+        }
+
+        :root[data-theme="dark"] .dark-strip {
+            background: #0a0e14;
+            border: 1px solid var(--secondary);
+        }
+
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        @media (max-width: 800px) {
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .faq-left h2 {
+            color: var(--secondary) !important;
+            /* margin-bottom: 20px; */
+        }
+
+        .faq-left p {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 18px;
+        }
+
+        .faq-item-modern {
+            padding: 18px 0;
+            border-bottom: 1px solid rgba(255, 209, 80, 0.2);
+        }
+
+        .faq-item-modern:last-child {
+            border-bottom: 0;
+        }
+
+        .faq-item-modern h3 {
+            color: var(--secondary);
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .faq-item-modern p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-left: 28px;
+            margin-bottom: 0;
+        }
+
+        .faq-right-box {
+            background: var(--white);
+            border-radius: 30px;
+            padding: 40px 35px;
+            box-shadow: 0 30px 40px -20px rgba(0, 0, 0, 0.2);
+        }
+
+        :root[data-theme="dark"] .faq-right-box {
+            background: #1c232b;
+            border: 1px solid rgba(255, 209, 80, 0.4);
+        }
+
+        .faq-right-box .faq-item-modern {
+            border-bottom: 1px solid rgba(11, 45, 114, 0.1);
+        }
+
+        .faq-right-box .faq-item-modern h6 {
+            color: var(--primary) !important;
+            font-size: 18px;
+        }
+
+        /* dark mode: faq right box headings gold, text white */
+        :root[data-theme="dark"] .faq-right-box .faq-item-modern h6 {
+            color: var(--secondary) !important;
+        }
+
+        :root[data-theme="dark"] .faq-right-box .faq-item-modern p {
+            color: rgba(255, 255, 255, 0.9) !important;
+        }
+
+        :root[data-theme="dark"] .faq-right-box {
+            color: white;
+        }
+
+
+        #side-footer {
+            border-bottom: none;
+            justify-content: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--primary);
+            letter-spacing: -1px;
+        }
+
+        .logo i {
+            color: var(--secondary);
+            margin-right: 6px;
+        }
+
+        :root[data-theme="dark"] #site-header,
+        :root[data-theme="dark"] #side-footer {
+            background: #0a0e14;
+            color: white !important;
+            border-color: var(--secondary);
+        }
+
+        :root[data-theme="dark"] .logo {
+            color: var(--secondary);
+        }
+
+        .section-styles {
+            padding: 35px;
+        }
+    </style>
+
+</head>
+
+<body data-theme="light">
+
+    <div id="site-header" class="fixed-top"></div>
+
+    <section class="section section-styles" style="padding-top:20px;">
+        <div class="hero-box">
+            <!-- <span class="section-subhead">curated living</span> -->
+            <h1>Discover Spaces Designed For Modern Living</h1>
+            <p>Thoughtfully crafted environments that enhance comfort, productivity, and everyday experiences — across
+                premium locations.</p>
+            <a href="services2.html" class="hero-btn"> Explore properties</a>
+        </div>
+    </section>
+
+    <!-- SECTION 2 – POPULAR LOCATIONS -->
+    <section class="section section-styles">
+        <div class="locations-header">
+            <h2>Popular locations</h2>
+            <p style="max-width: 600px; margin: 0 auto; opacity: 0.8;">With lots of unique blocks, easily build a
+                stunning page without coding — each space reflects our signature quality.</p>
+        </div>
+        <div class="locations-grid">
+            <div class="location-card">
+                <img src="https://images.pexels.com/photos/106399/pexels-photo-106399.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Beachview">
+                <div class="location-card-body">
+                    <h3>Beachview</h3>
+                    <span><i class="bi bi-door-open me-1"></i> 37 spaces</span>
+                </div>
+            </div>
+            <div class="location-card">
+                <img src="https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Haleyborough">
+                <div class="location-card-body">
+                    <h3>Haleyborough</h3>
+                    <span><i class="bi bi-door-open me-1"></i> 12 spaces</span>
+                </div>
+            </div>
+            <div class="location-card">
+                <img src="https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="Jeromyshire">
+                <div class="location-card-body">
+                    <h3>Jeromyshire</h3>
+                    <span><i class="bi bi-door-open me-1"></i> 28 spaces</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 – TALENT / WORKSPACES -->
+    <section class="section section-styles">
+        <div class="split-layout">
+            <div>
+                <h2>Work around very talented people</h2>
+                <p style="font-size: 18px; margin-bottom: 20px;">With lots of unique blocks, you can easily build a page
+                    easily without any coding. Vibrant community, inspiring views.</p>
+                <div class="features-row">
+                    <div>
+                        <h6><i class="bi bi-person-workspace"></i> Dedicated Desk</h6>
+                        <p>Build your next landing page quickly.</p>
+                    </div>
+                    <div>
+                        <h6><i class="bi bi-wifi"></i> High Speed Internet</h6>
+                        <p>Build your next landing page quickly.</p>
+                    </div>
+                    <div>
+                        <h6><i class="bi bi-cup-hot"></i> Unlimited Coffee</h6>
+                        <p>Build your next landing page quickly.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="split-images">
+                <img src="https://images.pexels.com/photos/4491459/pexels-photo-4491459.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="workspace modern 1">
+                <img src="https://images.pexels.com/photos/3861958/pexels-photo-3861958.jpeg?auto=compress&cs=tinysrgb&w=600"
+                    alt="workspace modern 2">
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 – FAQ / DARK STRIP -->
+    <section class="section section-styles">
+        <div class="dark-strip">
+            <div class="faq-grid">
+                <div class="faq-left">
+                    <h2>We are always here for your backup</h2>
+                    <p style="margin-bottom: 30px;">We share common trends & strategies for improving your rental
+                        income, 24/7.</p>
+
+                    <div class="faq-item-modern">
+                        <h3><i class="bi bi-volume-mute"></i> Noise‑free locations</h3>
+                        <p>With lots of unique blocks, easily build a page without coding.</p>
+                    </div>
+                    <div class="faq-item-modern">
+                        <h3><i class="bi bi-headset"></i> 24/7 hour support</h3>
+                        <p>With lots of unique blocks, easily build a page without coding.</p>
+                    </div>
+                    <div class="faq-item-modern">
+                        <h3><i class="bi bi-shield-check"></i> Secure & smart</h3>
+                        <p>State‑of‑the‑art security with gold standard service.</p>
+                    </div>
+                </div>
+                <div class="faq-right-box">
+                    <div class="faq-item-modern">
+                        <h6><i class="bi bi-question-circle"></i> How to setup Shade Pro?</h6>
+                        <p style="color: var(--black); opacity: 0.75;">Build your next landing page quickly with easy
+                            layout system.</p>
+                    </div>
+                    <div class="faq-item-modern">
+                        <h6><i class="bi bi-people"></i> Can I use Shade Pro for my clients?</h6>
+                    </div>
+                    <div class="faq-item-modern">
+                        <h6><i class="bi bi-cloud-check"></i> How often do you release updates?</h6>
+                    </div>
+                    <div class="faq-item-modern">
+                        <h6><i class="bi bi-archive"></i> How can I access old versions?</h6>
+                    </div>
+                    <div class="faq-item-modern">
+                        <h6><i class="bi bi-currency-dollar"></i> Flexible payment plans?</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="side-footer"></div>
+    <script src="footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="header.js"></script>
+
+    <script>
+        (function () {
+            const html = document.documentElement;
+
+            const savedTheme = localStorage.getItem("theme") || "light";
+            html.setAttribute("data-theme", savedTheme);
+
+            window.toggleDarkMode = function () {
+                const current = html.getAttribute("data-theme");
+                const next = current === "dark" ? "light" : "dark";
+                html.setAttribute("data-theme", next);
+                localStorage.setItem("theme", next);
+            };
+        })();
+    </script>
+
+
+</body>
+
+</html>

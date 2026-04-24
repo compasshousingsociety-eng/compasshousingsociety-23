@@ -1,0 +1,1271 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Real Estate · Arock</title>
+
+    <!-- Global & Bootstrap -->
+    <link rel="stylesheet" href="globalstyles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ===== RESET & VARIABLES ===== */
+        :root {
+            --primary: #0B2D72;
+            --secondary: #FFD150;
+            --white: #ffffff;
+            --black: #000000;
+            --bg-light: #ffffff;
+            --text-light: #000000;
+            --bg-dark: #121212;
+            --text-dark: #ffffff;
+            --error: #dc3545;
+            --success: #28a745;
+            --vertical-gap: 35px;
+            --border-radius: 20px;
+            --transition: all 0.3s ease;
+        }
+
+        /* ===== TYPOGRAPHY - FIXED SIZES ===== */
+        h1 {
+            font-size: 44px !important;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+
+        h2 {
+            font-size: 34px !important;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 24px !important;
+            font-weight: 600;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        h4 {
+            font-size: 23px !important;
+            font-weight:700;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+
+        h5,
+        h6 {
+            font-size: 18px !important;
+            font-weight: 500;
+            line-height: 1.5;
+            margin-bottom: 8px;
+        }
+
+        p,
+        span,
+        li,
+        a,
+        label,
+        input,
+        button,
+        .form-control,
+        .error-message,
+        .auth-subtitle,
+        .auth-toggle-text,
+        .password-strength,
+        .success-content p {
+            font-size: 16px !important;
+            line-height: 1.6;
+        }
+
+        /* ===== BODY STYLES ===== */
+        body {
+            font-family: "Roboto", "Open Sans", Arial, sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-light);
+            transition: var(--transition);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-top: 80px;
+        }
+
+        /* ===== DARK MODE ===== */
+        body.dark-mode {
+            background-color: var(--bg-dark);
+            color: var(--text-dark);
+        }
+
+        .dark-mode h1,
+        .dark-mode h2,
+        .dark-mode h3,
+        .dark-mode h4,
+        .dark-mode h5,
+        .dark-mode h6,
+        .dark-mode p,
+        .dark-mode span,
+        .dark-mode label {
+            color: var(--text-dark);
+        }
+        .dark-mode .auth-card {
+               background: transparent;
+        }
+
+        /* ===== WATERMARK LOGO ===== */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            margin: auto;
+            background-image: url("images/transparent-logo-1.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 600px auto;
+            opacity: 0.1;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .dark-mode body::before {
+            background-image: url("images/transparent-logo-1.png");
+            opacity: 0.15;
+        }
+
+        /* ===== AUTH MAIN CONTAINER ===== */
+        .auth-main {
+            flex: 1;
+            padding: var(--vertical-gap) 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ===== AUTH CARD - MODIFIED: REMOVED IMAGE COLUMN, CENTERED FORM ===== */
+        .auth-card {
+            /* background: var(--white); */
+            border-radius: 40px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(11, 45, 114, 0.1);
+            border: 1px solid rgba(255, 209, 80, 0.3);
+            transition: var(--transition);
+            max-width: 600px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .dark-mode .auth-card {
+            background: #1e1e1e;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        /* ===== FORM COLUMN - NOW FULL WIDTH ===== */
+        .auth-form-col {
+            padding: 50px 48px !important;
+            position: relative;
+            width: 100%;
+        }
+
+        .watermark-logo {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: transparent;
+            border: 3px double var(--secondary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--primary);
+            transform: rotate(8deg);
+            opacity: 0.2;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .dark-mode .watermark-logo {
+            color: var(--secondary);
+            border-color: var(--primary);
+            opacity: 0.3;
+        }
+
+        /* ===== AUTH SECTIONS ===== */
+        .auth-section {
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-subtitle {
+            color: var(--primary);
+            margin-bottom: var(--vertical-gap) !important;
+            opacity: 0.8;
+        }
+
+        .dark-mode .auth-subtitle {
+            color: var(--secondary);
+        }
+
+        /* ===== FORM STYLES ===== */
+        .auth-form {
+            margin-top: var(--vertical-gap);
+        }
+
+        .form-group {
+            margin-bottom: var(--vertical-gap) !important;
+            position: relative;
+        }
+
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            color: var(--primary);
+            margin-bottom: 8px;
+        }
+
+        .dark-mode .form-label {
+            color: var(--secondary);
+        }
+
+        .form-label i {
+            color: var(--secondary);
+            font-size: 18px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 18px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+               background: transparent;
+            color: var(--text-light);
+            transition: var(--transition);
+        }
+
+        .dark-mode .form-control {
+            background: #2a2a2a;
+            border-color: #444;
+            color: var(--text-dark);
+        }
+       
+        .form-control:focus {
+            border: 1px solid #e0e0e0 !important;
+            box-shadow: none !important;
+
+        }
+
+        .form-control.is-invalid {
+            border-color: var(--error);
+        }
+
+
+
+        /* ===== PASSWORD WRAPPER ===== */
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper .form-control {
+            padding-right: 50px;
+        }
+
+        .eye-btn {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 0;
+            font-size: 20px;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .eye-btn:hover {
+           position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            padding: 0;
+            font-size: 20px;
+            opacity: 0.7;
+            transition: var(--transition);
+        }
+
+        .dark-mode .eye-btn {
+            color: var(--secondary);
+        }
+
+        .dark-mode .eye-btn:hover {
+            color: #FFA500 !important;
+            /* Orange color on hover in dark mode */
+        }
+
+        /* ===== ERROR MESSAGES WITH ICON ===== */
+        .error-message {
+            color: var(--error);
+            margin-top: 6px;
+            min-height: 22px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .error-message.show {
+            display: flex;
+        }
+
+        .error-message i {
+            color: var(--error);
+            font-size: 14px;
+        }
+
+        /* ===== SUCCESS TICK ICON - REMOVED ===== */
+        /* Removed the success tick marks as requested */
+
+        /* ===== PASSWORD STRENGTH ===== */
+        .password-strength {
+            margin-top: 8px;
+            min-height: 22px;
+        }
+
+        .strength-weak {
+            color: var(--error);
+        }
+
+        .strength-medium {
+            color: #ffc107;
+        }
+
+        .strength-strong {
+            color: var(--success);
+        }
+
+        /* ===== PRIMARY BUTTON ===== */
+        .btn-primary {
+            display: inline-block;
+            font-size: 16px;
+            padding: 14px 26px;
+            background: #0B2D72;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            width: 100%;
+        }
+
+        .btn-primary:hover {
+            display: inline-block;
+            font-size: 16px;
+            padding: 14px 26px;
+            background: #0B2D72;
+            color: #ffffff;
+            text-decoration: none;
+            border-radius: 6px;
+            border: none;
+            width: 100%;
+        }
+
+        .dark-mode .btn-primary {
+            background: linear-gradient(135deg, var(--secondary), #e5bc3b);
+            color: var(--primary);
+        }
+
+        .dark-mode .btn-primary:hover {
+            background: linear-gradient(135deg, #e5bc3b, var(--secondary));
+            box-shadow: 0 10px 20px rgba(255, 209, 80, 0.3);
+        }
+
+        /* ===== AUTH TOGGLE TEXT ===== */
+        .auth-toggle-text {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        input[type="password"]::-ms-reveal,
+        input[type="password"]::-ms-clear {
+            display: none !important;
+        }
+
+        .auth-toggle-text a {
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            /* border-bottom: 2px solid var(--secondary); */
+            padding-bottom: 2px;
+            margin-left: 5px;
+        }
+
+        .auth-toggle-text a:hover {
+            border-bottom-color: var(--primary);
+        }
+
+        .dark-mode .auth-toggle-text a {
+            color: var(--secondary);
+            border-bottom-color: var(--primary);
+        }
+
+        /* ===== SUCCESS MODAL ===== */
+        .modal-content {
+            background: var(--white);
+            border-radius: 30px;
+            border: 2px solid var(--secondary);
+        }
+
+        .dark-mode .modal-content {
+            background: #1e1e1e;
+        }
+
+        .modal-body {
+            padding: 40px;
+        }
+
+        .success-content {
+            text-align: center;
+        }
+
+        .success-content i {
+            font-size: 64px;
+            color: var(--success);
+            margin-bottom: 20px;
+        }
+
+        .success-content p {
+            color: var(--primary);
+            font-weight: 500;
+        }
+
+        .dark-mode .success-content p {
+            color: var(--secondary);
+        }
+
+        /* ===== RESPONSIVE BREAKPOINTS ===== */
+        /* Desktop */
+        @media screen and (max-width: 1920px) {
+            .container {
+                max-width: 1600px;
+            }
+        }
+
+        @media screen and (max-width: 1536px) {
+            .container {
+                max-width: 1400px;
+            }
+        }
+
+        @media screen and (max-width: 1366px) {
+            .container {
+                max-width: 1200px;
+            }
+        }
+
+        @media screen and (max-width: 1280px) {
+            .container {
+                max-width: 1140px;
+            }
+        }
+
+        /* Tablet */
+        @media screen and (max-width: 1024px) {
+            .auth-form-col {
+                padding: 40px 30px !important;
+            }
+
+            h1 {
+                font-size: 40px !important;
+            }
+        }
+
+        @media screen and (max-width: 820px) {
+            .auth-card {
+                border-radius: 30px;
+            }
+
+            .auth-form-col {
+                padding: 35px 25px !important;
+            }
+        }
+
+        @media screen and (max-width: 800px) {
+            .auth-form-col {
+                padding: 30px 20px !important;
+            }
+        }
+
+        @media screen and (max-width: 768px) {
+            .auth-main {
+                padding: 20px 0;
+            }
+
+            .auth-card {
+                border-radius: 25px;
+            }
+
+            h1 {
+                font-size: 36px !important;
+            }
+
+            .watermark-logo {
+                width: 60px;
+                height: 60px;
+                font-size: 18px;
+            }
+        }
+
+        /* Mobile */
+        @media screen and (max-width: 412px) {
+            .auth-form-col {
+                padding: 25px 15px !important;
+            }
+
+            .form-group {
+                margin-bottom: 25px !important;
+            }
+
+            .btn-primary {
+                padding: 14px 28px;
+            }
+        }
+
+        @media screen and (max-width: 393px) {
+            h1 {
+                font-size: 32px !important;
+            }
+
+            .auth-subtitle {
+                margin-bottom: 25px !important;
+            }
+        }
+
+        @media screen and (max-width: 390px) {
+            .auth-form-col {
+                padding: 20px 12px !important;
+            }
+        }
+
+        @media screen and (max-width: 360px) {
+            h1 {
+                font-size: 30px !important;
+            }
+
+            .form-label {
+                font-size: 15px !important;
+            }
+
+            .btn-primary {
+                padding: 12px 24px;
+            }
+        }
+
+        /* ===== REMOVE VALIDATION ICONS ONLY ===== */
+        .form-control.is-invalid,
+        .form-control.is-valid,
+        .was-validated .form-control:invalid,
+        .was-validated .form-control:valid,
+        .form-control:invalid,
+        .form-control:valid {
+            background-image: none !important;
+            /* Removes the icon */
+            padding-right: 18px !important;
+            /* Resets the padding Bootstrap adds for the icon */
+        }
+
+        /* Keep your custom red border but remove Bootstrap's icon */
+        .form-control.is-invalid {
+            border-color: var(--error);
+            background-image: none !important;
+        }
+
+        .required-star {
+            color: #dc3545;
+            margin-left: 4px;
+            font-size: 18px;
+        }
+        [data-theme="dark"] .form-label{
+            color: white;
+        }
+        [data-theme="dark"] .btn-primary {
+           background-color: #e5bc3b;
+           color: black;
+        }
+        [data-theme="dark"] .auth-toggle-text a {
+          color: white;
+        }
+ 
+[data-theme="dark"] .form-control {
+    background: transparent !important;
+    border: 1px solid #444 !important;
+    color: #ffffff !important;
+}
+[data-theme="dark"] .eye-btn {
+ color: #e5bc3b;
+}
+
+[data-theme="dark"] .form-control::placeholder {
+    color: #aaaaaa !important;
+    font-weight: 400;
+}
+
+[data-theme="dark"] .form-control:focus,
+[data-theme="dark"] .form-control:active {
+    background: transparent !important;
+    border: 1px solid #444 !important;  /* Keeps the same border */
+    outline: none !important;
+    box-shadow: none !important;
+}
+      
+    </style>
+</head>
+
+<body data-theme="light">
+
+    <div id="site-header" class="fixed-top"></div>
+    <main class="auth-main">
+        <div class="container">
+            <!-- MODIFICATION: Image column removed, card centered and full width on small -->
+            <div class="auth-card">
+                <!-- Only Form Column (full width) -->
+                <div class="auth-form-col">
+                    <!-- Watermark Logo -->
+
+                    <!-- Login Section -->
+                    <section id="loginSection" class="auth-section">
+                        <h1>Welcome Back</h1>
+
+                        <form id="loginForm" class="auth-form" novalidate>
+                            <div class="form-group">
+                                <label for="loginEmail" class="form-label">
+                                    Email Address <span class="required-star">*</span>
+                                </label>
+                                <input type="email" id="loginEmail" class="form-control"
+                                    placeholder="your.email@gmail.com">
+                                <div class="error-message" id="loginEmailError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="loginPassword" class="form-label">
+                                    Password <span class="required-star">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="loginPassword" class="form-control"
+                                        placeholder="Enter your password">
+                                    <button type="button" class="eye-btn"
+                                        onclick="togglePassword('loginPassword', this)">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="error-message" id="loginPasswordError"></div>
+                            </div>
+
+                            <button type="submit" class="btn-primary">Login Now</button>
+
+                            <p class="auth-toggle-text">
+                                New user?
+                                <a href="#" onclick="showRegister(); return false;">Create account</a>
+                            </p>
+                        </form>
+                    </section>
+
+                    <!-- Register Section -->
+                    <section id="registerSection" class="auth-section" style="display: none;">
+                        <h1>Create Account</h1>
+                        <p class="auth-subtitle">Join our community today</p>
+
+                        <form id="registerForm" class="auth-form" novalidate>
+                            <div class="form-group">
+                                <label for="fullname" class="form-label">
+                                    Full Name<span class="required-star">*</span>
+                                </label>
+                                <input type="text" id="fullname" class="form-control" placeholder="John Smith">
+                                <div class="error-message" id="nameError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="regEmail" class="form-label">
+                                    Email Address <span class="required-star">*</span>
+                                </label>
+                                <input type="email" id="regEmail" class="form-control"
+                                    placeholder="your.email@gmail.com">
+                                <div class="error-message" id="regEmailError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone" class="form-label">
+                                    Phone Number <span class="required-star">*</span>
+                                </label>
+                                <input type="tel" id="phone" class="form-control" placeholder="6123456789"
+                                    maxlength="10">
+                                <div class="error-message" id="phoneError"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="regPassword" class="form-label">
+                                    Password <span class="required-star">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="regPassword" class="form-control"
+                                        placeholder="Create strong password">
+                                    <button type="button" class="eye-btn" onclick="togglePassword('regPassword', this)">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="error-message" id="regPasswordError"></div>
+                                <div class="password-strength" id="passwordStrength"></div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="confirmPassword" class="form-label">
+                                    Confirm Password <span class="required-star">*</span>
+                                </label>
+                                <div class="password-wrapper">
+                                    <input type="password" id="confirmPassword" class="form-control"
+                                        placeholder="Re-enter password">
+                                    <button type="button" class="eye-btn"
+                                        onclick="togglePassword('confirmPassword', this)">
+                                        <i class="fa-regular fa-eye"></i>
+                                    </button>
+                                </div>
+                                <div class="error-message" id="confirmError"></div>
+                            </div>
+
+                            <button type="submit" class="btn-primary">Register Now</button>
+
+                            <p class="auth-toggle-text">
+                                Already have an account?
+                                <a href="#" onclick="showLogin(); return false;">Login here</a>
+                            </p>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Success Modal -->
+    <div class="modal fade" id="successModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="success-content">
+                        <i class="fa-solid fa-circle-check"></i>
+                        <p id="successMessage">Operation completed successfully!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="side-footer"></div>
+    <script src="footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="header.js"></script>
+
+    <script>
+        // ===== DARK MODE TOGGLE =====
+        function initDarkMode() {
+            const body = document.body;
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const darkModeToggleDesktop = document.getElementById('darkModeToggleDesktop');
+
+            // Check localStorage
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                body.classList.add('dark-mode');
+            }
+
+            function toggleDarkMode() {
+                body.classList.toggle('dark-mode');
+                if (body.classList.contains('dark-mode')) {
+                    localStorage.setItem('darkMode', 'enabled');
+                } else {
+                    localStorage.setItem('darkMode', 'disabled');
+                }
+            }
+
+            if (darkModeToggle) darkModeToggle.addEventListener('click', toggleDarkMode);
+            if (darkModeToggleDesktop) darkModeToggleDesktop.addEventListener('click', toggleDarkMode);
+        }
+
+        // ===== PASSWORD TOGGLE =====
+        window.togglePassword = function (inputId, button) {
+            const input = document.getElementById(inputId);
+            const icon = button.querySelector('i');
+
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        };
+
+        // ===== SHOW/HIDE SECTIONS =====
+        window.showRegister = function () {
+            document.getElementById('loginSection').style.display = 'none';
+            document.getElementById('registerSection').style.display = 'block';
+            clearAllErrors();
+        };
+
+        window.showLogin = function () {
+            document.getElementById('registerSection').style.display = 'none';
+            document.getElementById('loginSection').style.display = 'block';
+            clearAllErrors();
+        };
+
+        // ===== CLEAR ERRORS =====
+        function clearAllErrors() {
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.innerHTML = ''; // Clear content including icons
+                el.classList.remove('show');
+            });
+            document.querySelectorAll('.form-control').forEach(el => {
+                el.classList.remove('is-invalid', 'is-valid');
+            });
+            const strengthEl = document.getElementById('passwordStrength');
+            if (strengthEl) {
+                strengthEl.textContent = '';
+                strengthEl.className = 'password-strength';
+            }
+        }
+
+        // ===== VALIDATION FUNCTIONS =====
+        function validateName(name) {
+            if (!name || name.trim() === '') return false;
+            // MODIFICATION: disallow empty spaces only, must contain at least one letter, no multiple spaces
+            if (/^\s*$/.test(name)) return false; // rejects only spaces
+            if (/\s{2,}/.test(name)) return false; // no multiple consecutive spaces
+            if (/\s$|^\s/.test(name)) return false; // no leading/trailing spaces (trim issue)
+            if (/[0-9]/.test(name)) return false;
+            // must have at least two letters and only letters/spaces
+            return /^[A-Za-z]+(?:\s[A-Za-z]+)*$/.test(name) && name.trim().length >= 2;
+        }
+
+        function validateEmail(email) {
+            if (!email || email.trim() === '') return false;
+            if (/\s/.test(email)) return false;
+            if (email !== email.trim()) return false;
+            return /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.(com|in|org|net)$/i.test(email);
+        }
+
+        function validatePhone(phone) {
+            if (!phone || phone.trim() === '') return false;
+            if (/\s/.test(phone)) return false;
+            // MODIFICATION: must start with 6-9, exactly 10 digits
+            return /^[6-9]\d{9}$/.test(phone);
+        }
+
+        function validatePassword(password) {
+            if (!password) return false;
+            if (/\s/.test(password)) return false;
+            return /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/.test(password);
+        }
+
+        function checkPasswordStrength(password) {
+            if (!password) return '';
+            if (password.length < 8) return 'weak';
+            let score = 0;
+            if (/[a-z]/.test(password)) score++;
+            if (/[A-Z]/.test(password)) score++;
+            if (/\d/.test(password)) score++;
+            if (/[@$!%*?&]/.test(password)) score++;
+
+            if (score === 4) return 'strong';
+            if (score === 3) return 'medium';
+            return 'weak';
+        }
+
+        // ===== SHOW ERROR WITH ICON =====
+        function showError(elementId, message) {
+            const errorEl = document.getElementById(elementId);
+            const inputId = elementId.replace('Error', '');
+            const inputEl = document.getElementById(inputId);
+
+            if (errorEl) {
+                errorEl.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> ${message}`;
+                errorEl.classList.add('show');
+            }
+            if (inputEl) {
+                inputEl.classList.add('is-invalid');
+                inputEl.classList.remove('is-valid');
+            }
+        }
+
+        // ===== SHOW SUCCESS - REMOVED TICK MARKS =====
+        function showSuccess(inputId) {
+            const errorId = inputId + 'Error';
+            const errorEl = document.getElementById(errorId);
+            const inputEl = document.getElementById(inputId);
+
+            if (errorEl) {
+                errorEl.classList.remove('show');
+                errorEl.innerHTML = ''; // Clear any error message
+            }
+            if (inputEl) {
+                inputEl.classList.remove('is-invalid');
+                // Removed the is-valid class to hide green border and tick
+                inputEl.classList.remove('is-valid');
+            }
+        }
+
+        // ===== SHOW MODAL =====
+        function showSuccessModal(message) {
+            const modalEl = document.getElementById('successModal');
+            const messageEl = document.getElementById('successMessage');
+
+            if (messageEl) {
+                messageEl.textContent = message;
+            }
+
+            const modal = new bootstrap.Modal(modalEl);
+            modal.show();
+
+            setTimeout(() => {
+                modal.hide();
+            }, 3000);
+        }
+
+        // ===== REGISTER FUNCTION =====
+        window.register = function () {
+            clearAllErrors();
+
+            const name = document.getElementById('fullname').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('regPassword').value;
+            const confirm = document.getElementById('confirmPassword').value;
+
+            let isValid = true;
+
+            // Validate Name
+            if (!validateName(name)) {
+                showError('nameError', 'Name must contain only letters and single spaces (min 2 chars, no leading/trailing/multiple spaces)');
+                isValid = false;
+            } else {
+                showSuccess('fullname');
+            }
+
+            // Validate Email
+            if (!validateEmail(email)) {
+                showError('regEmailError', 'Only @gmail.com addresses allowed (no spaces)');
+                isValid = false;
+            } else {
+                showSuccess('regEmail');
+            }
+
+            // Validate Phone
+            if (!validatePhone(phone)) {
+                showError('phoneError', 'Enter 10 digits starting with 6-9 (no spaces/zeros at start)');
+                isValid = false;
+            } else {
+                showSuccess('phone');
+            }
+
+            // Validate Password
+            if (!validatePassword(password)) {
+                showError('regPasswordError', 'Password must be 8+ chars with uppercase, lowercase, number & special character');
+                isValid = false;
+            } else {
+                showSuccess('regPassword');
+            }
+
+            // Validate Confirm Password (only if password is valid or if confirm field is touched)
+            // CHANGE: Show confirm error only if there is an actual mismatch or empty when password is set
+            if (password !== confirm) {
+                showError('confirmError', 'Passwords do not match');
+                isValid = false;
+            } else if (confirm && validatePassword(confirm)) {
+                showSuccess('confirmPassword');
+            }
+
+            if (isValid) {
+                showSuccessModal('Registration successful! You can now login.');
+
+                // Clear form
+                document.getElementById('fullname').value = '';
+                document.getElementById('regEmail').value = '';
+                document.getElementById('phone').value = '';
+                document.getElementById('regPassword').value = '';
+                document.getElementById('confirmPassword').value = '';
+
+                document.querySelectorAll('#registerSection .form-control').forEach(el => {
+                    el.classList.remove('is-valid');
+                });
+
+                // Switch to login after 2 seconds
+                setTimeout(() => {
+                    showLogin();
+                }, 2000);
+            }
+        };
+
+        // ===== LOGIN FUNCTION =====
+        window.login = function () {
+            clearAllErrors();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            let isValid = true;
+
+            if (!validateEmail(email)) {
+                showError('loginEmailError', 'Only @gmail.com addresses allowed (no spaces)');
+                isValid = false;
+            } else {
+                showSuccess('loginEmail');
+            }
+
+            if (!validatePassword(password)) {
+                showError('loginPasswordError', 'Invalid password format');
+                isValid = false;
+            } else {
+                showSuccess('loginPassword');
+            }
+
+            if (isValid) {
+                showSuccessModal('Login successful! Welcome back.');
+
+                // Clear form
+                document.getElementById('loginEmail').value = '';
+                document.getElementById('loginPassword').value = '';
+
+                document.querySelectorAll('#loginSection .form-control').forEach(el => {
+                    el.classList.remove('is-valid');
+                });
+            }
+        };
+
+        // ===== REAL-TIME VALIDATION =====
+        document.addEventListener('DOMContentLoaded', function () {
+            initDarkMode();
+
+            // Name validation — MODIFIED: hide error immediately upon any input
+            const nameInput = document.getElementById('fullname');
+            if (nameInput) {
+                nameInput.addEventListener('input', function (e) {
+                    // MODIFICATION: block spacebar from creating empty/only spaces, but allow single spaces between words
+                    let value = e.target.value;
+                    // Replace multiple spaces with single space, trim later
+                    value = value.replace(/[0-9]/g, ''); // no digits
+                    e.target.value = value;
+
+                    // Immediately hide name error if typing (even if not valid yet)
+                    const errorEl = document.getElementById('nameError');
+                    if (errorEl && errorEl.classList.contains('show')) {
+                        // Only hide if user is actively fixing — we clear the red border and error
+                        errorEl.classList.remove('show');
+                        errorEl.innerHTML = '';
+                        document.getElementById('fullname').classList.remove('is-invalid');
+                    }
+
+                    if (validateName(e.target.value)) {
+                        showSuccess('fullname');
+                    }
+                });
+                // MODIFICATION: block spacebar at very beginning or if would create double space
+                nameInput.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') {
+                        const cursorPos = e.target.selectionStart;
+                        const currentVal = e.target.value;
+                        // Prevent space if it's the first character or would create double space
+                        if (cursorPos === 0 || (currentVal[cursorPos - 1] === ' ')) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            }
+
+            // Email validation - Register
+            const regEmail = document.getElementById('regEmail');
+            if (regEmail) {
+                regEmail.addEventListener('input', function (e) {
+                    e.target.value = e.target.value.replace(/\s/g, '');
+                    if (validateEmail(e.target.value)) {
+                        showSuccess('regEmail');
+                    }
+                });
+                regEmail.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') e.preventDefault();
+                });
+            }
+
+            // Phone validation - MODIFIED to block 0-5 at start
+            const phoneInput = document.getElementById('phone');
+            if (phoneInput) {
+                phoneInput.addEventListener('input', function (e) {
+                    let value = e.target.value.replace(/\D/g, ''); // Keep only digits
+
+                    // BLOCK if first digit is 0-5 by preventing input
+                    if (value.length > 0) {
+                        const firstDigit = value.charAt(0);
+                        if (/[0-5]/.test(firstDigit)) {
+                            // If first digit is invalid, remove it
+                            value = value.substring(1);
+                        }
+                    }
+
+                    e.target.value = value;
+
+                    if (validatePhone(e.target.value)) {
+                        showSuccess('phone');
+                    }
+                });
+
+                phoneInput.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') e.preventDefault();
+
+                    // Also block keypress if it would make first digit 0-5
+                    if (e.key.length === 1 && /[0-9]/.test(e.key)) {
+                        const currentVal = e.target.value;
+                        // If this is the first character and key is 0-5, block it
+                        if (currentVal.length === 0 && /[0-5]/.test(e.key)) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            }
+
+            // Password validation
+            const passwordInput = document.getElementById('regPassword');
+            if (passwordInput) {
+                passwordInput.addEventListener('input', function (e) {
+                    const password = e.target.value;
+                    const strength = checkPasswordStrength(password);
+                    const strengthEl = document.getElementById('passwordStrength');
+
+                    if (strength) {
+                        strengthEl.textContent = 'Password strength: ' + strength.charAt(0).toUpperCase() + strength.slice(1);
+                        strengthEl.className = 'password-strength strength-' + strength;
+                    } else {
+                        strengthEl.textContent = '';
+                        strengthEl.className = 'password-strength';
+                    }
+
+                    if (validatePassword(password)) {
+                        showSuccess('regPassword');
+                    }
+                });
+                passwordInput.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') e.preventDefault();
+                });
+            }
+
+            // Confirm password — MODIFIED: do NOT show error on input; only on submit or if already shown?
+            // Keep it simple: show error only when there's a mismatch AND the field is not empty, but hide on match without submit?
+            // We'll make it show success if they match, but not auto-show error until submit.
+            const confirmInput = document.getElementById('confirmPassword');
+            if (confirmInput) {
+                confirmInput.addEventListener('input', function () {
+                    const password = document.getElementById('regPassword').value;
+                    const confirm = confirmInput.value;
+
+                    // If they match and confirm is not empty, clear any error
+                    if (password === confirm && confirm.length > 0) {
+                        showSuccess('confirmPassword'); // this clears error & red border
+                    } else {
+                        // Do NOT show error automatically; just remove success visuals if any
+                        const errorEl = document.getElementById('confirmError');
+                        if (errorEl && errorEl.classList.contains('show')) {
+                            // If error was previously shown due to submit, we might want to keep it until fixed.
+                            // But per request: "conform password not showing error message without enetr cliks register"
+                            // So we remove error when typing, even if mismatch, until register is clicked.
+                            errorEl.classList.remove('show');
+                            errorEl.innerHTML = '';
+                            document.getElementById('confirmPassword').classList.remove('is-invalid');
+                        }
+                        // Also remove any "success" class if we had added it (but showSuccess adds none)
+                        // Ensure no red border remains if they start typing
+                        document.getElementById('confirmPassword').classList.remove('is-invalid');
+                    }
+                });
+                confirmInput.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') e.preventDefault();
+                });
+            }
+
+            // Login email validation
+            const loginEmail = document.getElementById('loginEmail');
+            if (loginEmail) {
+                loginEmail.addEventListener('input', function (e) {
+                    e.target.value = e.target.value.replace(/\s/g, '');
+                    if (validateEmail(e.target.value)) {
+                        showSuccess('loginEmail');
+                    }
+                });
+                loginEmail.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') e.preventDefault();
+                });
+            }
+
+            // Login password validation
+            const loginPassword = document.getElementById('loginPassword');
+            if (loginPassword) {
+                loginPassword.addEventListener('input', function () {
+                    if (validatePassword(loginPassword.value)) {
+                        showSuccess('loginPassword');
+                    }
+                });
+                loginPassword.addEventListener('keydown', function (e) {
+                    if (e.key === ' ') e.preventDefault();
+                });
+            }
+
+            // Form submissions
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    window.register();
+                });
+            }
+
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    window.login();
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

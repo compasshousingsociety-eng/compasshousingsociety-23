@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Real Estate · Arock</title>
+
+    <!-- Global & Bootstrap -->
+    <link rel="stylesheet" href="globalstyles.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-main: #ffffff;
+            --text-main: #000000;
+            --primary: #0B2D72;
+            --secondary: #FFD150;
+            --white: #ffffff;
+            --black: #000000;
+            --vertical-gap: 35px;
+        }
+
+        :root[data-theme="dark"] {
+            --bg-main: #000000;
+            --text-main: #ffffff;
+            --primary: #0B2D72;   /* blue stays same, but on dark bg headings appear white, blue used only as accent */
+        }
+
+        body {
+            font-family: "Roboto", "Open Sans", Arial, sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            padding-top: 80px;
+            transition: none;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* watermark – transparent logo (visible both themes) */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            margin: auto;
+            background-image: url("images/transparent-logo-1.png");
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 600px auto;
+            opacity: 0.10;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        :root[data-theme="dark"] body::before {
+            background-image: url("images/transparent-logo-1.png");
+            opacity: 0.10;
+        }
+
+        /* === TYPOGRAPHY – strict scale: no inline font sizes, only these === */
+        h1 {
+            font-size: 44px !important;
+            font-weight: 700;
+            line-height: 1.2;
+            /* color: var(--primary); */
+        }
+        :root[data-theme="dark"] h1,
+        :root[data-theme="dark"] h2,
+        :root[data-theme="dark"] h3,
+        :root[data-theme="dark"] h4,
+        :root[data-theme="dark"] h5,
+        :root[data-theme="dark"] h6 {
+            color: #ffffff !important;   /* all headings white on dark mode */
+        }
+
+        h2 {
+            font-size: 34px !important;
+            font-weight: 700;
+            /* color: var(--primary); */
+            display: block;
+            /* text-align: center; */
+        }
+
+        h3 {
+            font-size: 24px !important;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        h4 {
+            font-size: 23px !important;
+           font-weight: 700;
+            color: var(--primary);
+        }
+
+        h5, h6 {
+            font-size: 18px !important;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        p, span, li, a, .btn, .card-text, .breadcrumb, .badge, .list-unstyled, .small-text, 
+        .step-circle, .badge-arock, div, section, .service-card p, .col p, .d-flex p, 
+        .text-white, .text-black, .fs-3, i, .bi, .fas, .fa-solid, .fa-regular {
+            font-size: 16px !important;
+        }
+
+        /* special cases: stat numbers inside h4, but we keep h4 size 23px, but override numbers to be 23px not forced 16 */
+        h4, h4 span, h4 i, .stat-number {
+            font-size: 23px !important; 
+        }
+        /* step circles numbers 24px like h3 but we set them explicitly */
+        .step-circle {
+            font-size: 24px !important;
+            font-weight: 600;
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--primary);
+        }
+
+        /* spacing – only vertical-gap between sections */
+        .section {
+           padding: 35px;
+        }
+
+        .container-custom {
+            padding: 0 6%;
+        }
+
+        /* utility colors */
+        .bg-primary-custom {
+            background-color: var(--primary);
+        }
+
+        .bg-secondary-custom {
+            background-color: var(--secondary);
+        }
+
+        .text-primary-custom {
+            color: var(--primary);
+        }
+
+        .text-secondary-custom {
+            color: var(--secondary);
+        }
+
+        .border-secondary-custom {
+            border-color: var(--secondary);
+        }
+
+        /* ===== MODERN, CLEAN SERVICE SECTIONS ===== */
+        .service-card {
+            background: var(--bg-main);
+            border: 1px solid rgba(11, 45, 114, 0.08);
+            transition: 0.2s;
+            display: block;
+            text-align: center;
+        }
+
+        .service-card:hover {
+            border-color: var(--secondary);
+        }
+
+        .badge-arock {
+            background: var(--secondary);
+            color: var(--black);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-weight: 600;
+        }
+
+        .badge-arock i {
+            color: var(--primary);
+        }
+
+        .step-circle {
+            width: 56px;
+            height: 56px;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            border: 3px solid var(--secondary);
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid rgba(11, 45, 114, 0.1);
+            margin: 30px 0;
+        }
+
+        /* Dark mode fixes: ensure all text on dark bg is white unless colored specifically */
+        :root[data-theme="dark"] body,
+        :root[data-theme="dark"] p,
+        :root[data-theme="dark"] span,
+        :root[data-theme="dark"] li,
+        :root[data-theme="dark"] .card-text,
+        :root[data-theme="dark"] .breadcrumb,
+        :root[data-theme="dark"] .badge,
+        :root[data-theme="dark"] .list-unstyled,
+        :root[data-theme="dark"] .service-card p,
+        :root[data-theme="dark"] .col p,
+        :root[data-theme="dark"] div:not(.bg-primary-custom):not([style*="background"]):not(.step-circle) {
+            color: #ffffff !important;
+        }
+        /* preserve blue for headings inside dark? we set h1-h6 white above, but also any .text-primary? */
+        :root[data-theme="dark"] .text-primary-custom,
+        :root[data-theme="dark"] .fa-home, 
+        :root[data-theme="dark"] .fa-building,
+        :root[data-theme="dark"] .fa-tree,
+        :root[data-theme="dark"] .fa-gem,
+        :root[data-theme="dark"] i.bi,
+        :root[data-theme="dark"] .fas {
+            color: var(--secondary) !important; /* keep icons visible on dark, using secondary yellow for contrast */
+        }
+        /* override for blue icons we want primary? we set them to secondary on dark */
+        :root[data-theme="dark"] i[style*="color: var(--primary)"] {
+            color: var(--secondary) !important;
+        }
+        /* stat numbers (h4) inside dark: we already set h4 white, but numbers we want yellow? keep as white? but we want brand */
+        :root[data-theme="dark"] h4 {
+            color: #ffffff !important;
+        }
+        :root[data-theme="dark"] .bg-primary-custom h3,
+        :root[data-theme="dark"] .bg-primary-custom p,
+        :root[data-theme="dark"] .bg-primary-custom i,
+        :root[data-theme="dark"] .bg-primary-custom a {
+            color: white !important;
+        }
+        :root[data-theme="dark"] .bg-primary-custom i {
+            color: var(--secondary) !important;
+        }
+        /* step circle text inside dark */
+        :root[data-theme="dark"] .step-circle {
+            background: var(--primary);
+            color: white !important;
+            border-color: var(--secondary);
+        }
+        /* service card dark mode */
+        :root[data-theme="dark"] .service-card {
+            background: #0a0a0a;
+            border-color: #333;
+        }
+        :root[data-theme="dark"] .service-card h3 {
+            color: #ffffff !important;
+        }
+
+        /* responsiveness */
+        @media (max-width: 1024px) {
+            h1 { font-size: 40px !important; }
+            h2 { font-size: 32px !important; }
+            .container-custom { padding: 0 5%; }
+        }
+        @media (max-width: 820px) {
+            h1 { font-size: 38px !important; }
+            h2 { font-size: 30px !important; }
+            .step-circle { width: 48px; height: 48px; font-size: 22px !important; }
+        }
+        @media (max-width: 768px) {
+            h1 { font-size: 36px !important; }
+            h2 { font-size: 28px !important; }
+            body { padding-top: 70px; }
+        }
+        @media (max-width: 576px) {
+            h1 { font-size: 32px !important; }
+            h2 { font-size: 26px !important; }
+            .container-custom { padding: 0 20px; }
+        }
+        @media (max-width: 390px) {
+            h1 { font-size: 30px !important; }
+            h2 { font-size: 24px !important; }
+        }
+
+        /* remove any inline font sizes from any element */
+        [style*="font-size"] {
+            font-size: inherit !important;
+        }
+        /* force all elements to follow except headings and step-circle */
+        body, div, section, p, span, a, li, button, .btn, i, .bi, .fas {
+            font-size: 16px !important;
+        }
+        h1, h2, h3, h4, h5, h6 {
+            font-size: revert !important; /* then we apply !important in explicit rules */
+        }
+        h1 { font-size: 44px !important; }
+        h2 { font-size: 34px !important; }
+        h3 { font-size: 24px !important; }
+        h4 { font-size: 23px !important; }
+        h5, h6 { font-size: 18px !important; }
+        .step-circle { font-size: 24px !important; }
+
+        /* fix dark mode bg for main sections */
+        :root[data-theme="dark"] .bg-primary-custom {
+            background-color: #0B2D72 !important;
+        }
+        :root[data-theme="dark"] .bg-primary-custom * {
+            color: white !important;
+        }
+        :root[data-theme="dark"] .bg-primary-custom i,
+        :root[data-theme="dark"] .bg-primary-custom .bi {
+            color: var(--secondary) !important;
+        }
+        :root[data-theme="dark"] .bg-primary-custom a {
+            color: black !important;
+            background: var(--secondary) !important;
+        }
+        :root[data-theme="dark"] .bg-primary-custom .btn {
+            background: var(--secondary) !important;
+            color: black !important;
+        }
+        :root[data-theme="dark"]  .final-section{
+            background-color: #000000;
+            border: 1px solid white;
+        }
+        .final-section{
+            background: var(--primary);
+             border-radius: 20px;
+        }
+        .side-section{
+            background: var(--primary);
+        }
+         :root[data-theme="dark"]  .side-section{
+            background-color: black;
+            border: 1px solid white;
+         }
+    </style>
+
+</head>
+
+<body data-theme="light">
+
+    <div id="site-header" class="fixed-top"></div>
+
+    <section class="section row align-items-center">
+        <div class="col-lg-7">
+            <!-- breadcrumb (minimal) -->
+           
+            <h1 class="mb-2">Premium real estate<br>consulting & acquisition</h1>
+           
+            <p style="max-width: 90%;">End-to-end real estate solutions — from prime property search
+                and legal due diligence to seamless closing. Dedicated advisors for high-yield investments and luxury
+                living.</p>
+            <!-- stat boxes clean -->
+            <div class="d-flex gap-4 mt-3">
+                <div>
+                    <h4 style="margin-bottom: 4px;">150+</h4><span>Properties</span>
+                </div>
+                <div>
+                    <h4>$2.3B+</h4><span>Volume</span>
+                </div>
+                <div>
+                    <h4>12</h4><span>Countries</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-5 mt-4 mt-lg-0">
+            <div class=" p-4 rounded-3 side-section">
+                <h3 class="text-white mb-3"><i class="bi bi-building me-2" style="color: var(--secondary);"></i>
+                    Off-market portfolio</h3>
+                <p class="text-white mb-3" style="opacity: 0.95;">VIP access to institutional-grade listings &
+                    analytics.VIP access to institutional-grade listings & analytics.Direct developer partnerships & exclusive pre-launch pricing.Personalized market intelligence delivered quarterly.</p>
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 2 – CORE SERVICES (4 clean cards, only colours) -->
+    <section class="section">
+        <div class="row mb-2">
+            <div class="col-12">
+                <h2 class="mb-4" style="text-align: center;">Tailored for every asset</h2>
+                <div class="divider"></div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card p-4 h-100 rounded-3">
+                    <i class="fas fa-home fa-2xl" style="color: var(--primary); font-size: 2.2rem;"></i>
+                    <h3 style="color: var(--primary);" class="mb-2">Residential</h3>
+                    <p class="mb-0">Villas, penthouses, smart apartments. Full market analysis & negotiation.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card p-4 h-100 rounded-3">
+                    <i class="fas fa-building fa-2xl" style="color: var(--primary); font-size: 2.2rem;"></i>
+                    <h3 style="color: var(--primary);" class="mb-2">Commercial</h3>
+                    <p class="mb-0">Office towers, retail, industrial. Highest ROI focus & asset management.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card p-4 h-100 rounded-3">
+                    <i class="fas fa-tree fa-2xl" style="color: var(--primary); font-size: 2.2rem;"></i>
+                    <h3 style="color: var(--primary);" class="mb-2">Land & dev.</h3>
+                    <p class="mb-0">Zoning, master-planned communities, JVs, and feasibility.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3">
+                <div class="service-card p-4 h-100 rounded-3">
+                    <i class="fas fa-gem fa-2xl" style="color: var(--primary); font-size: 2.2rem;"></i>
+                    <h3 style="color: var(--primary);" class="mb-2">Luxury rentals</h3>
+                    <p class="mb-0">Branded residences, concierge, high-net-worth portfolios.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 3 – IN-DEPTH SERVICE DETAILS (clean, two columns, icons) -->
+    <section class="section row g-5">
+        <div class="col-lg-7">
+            <h2>Full‑cycle excellence</h2>
+            <div class="divider mb-4"></div>
+            <p>We combine hyperlocal expertise with a global network. Licensed consultants, legal strategists, financial
+                analysts.</p>
+            <!-- feature list modern -->
+            <div class="mt-4">
+                <div class="d-flex mb-2">
+                    <i class="bi bi-check-circle-fill me-3 fs-3" style="color: var(--secondary);"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Sourcing & due diligence</h3>
+                        <p>Off-market inventory, title verification, feasibility reports.</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-4">
+                    <i class="bi bi-check-circle-fill me-3 fs-3" style="color: var(--secondary);"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Valuation & negotiation</h3>
+                        <p>Certified appraisers, comparative analysis, seller direct.</p>
+                    </div>
+                </div>
+                <div class="d-flex mb-4">
+                    <i class="bi bi-check-circle-fill me-3 fs-3" style="color: var(--secondary);"></i>
+                    <div>
+                        <h3 style="color: var(--primary);">Closing & escrow</h3>
+                        <p>Paperwork, international transfer, tax advisory, registry.</p>
+                    </div>
+                </div>
+                <!-- <div class="d-flex">
+                    <i class="bi bi-check-circle-fill me-3 fs-3" style="color: var(--secondary);"></i>
+                    <div>
+                        <h4 style="color: var(--primary);">Post‑acquisition</h4>
+                        <p>Property management, interior coordination, rental arbitrage.</p>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div class="col-lg-5">
+            <div
+                style="background: rgba(11,45,114,0.02); padding: 32px; border-radius: 16px; border-left: 6px solid var(--secondary);">
+                <h3 style="color: var(--primary);" class="mb-3">Service deep‑dive</h3>
+                <div class="mb-4">
+                    <h5 style="color: var(--black); font-weight: 700;"><i class="fas fa-chart-line me-2"
+                            style="color: var(--secondary);"></i>Investment intelligence</h5>
+                    <p>Proprietary data on 40+ markets: cap rates, yield trends, regulatory shifts.</p>
+                </div>
+                <div class="mb-4">
+                    <h5 style="color: var(--black); font-weight: 700;"><i class="fas fa-file-signature me-2"
+                            style="color: var(--secondary);"></i>Legal shield</h5>
+                    <p>Top real estate law firms, anti‑money laundering, title insurance.</p>
+                </div>
+                <div>
+                    <h5 style="color: var(--black); font-weight: 700;"><i class="fas fa-globe me-2"
+                            style="color: var(--secondary);"></i>Global mobility</h5>
+                    <p>Residency-by-investment programs integrated with property deals.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4 – PROCESS / STEPS (clean circles, no extra gap) -->
+    <section class="section">
+        <div class="row">
+            <h2 class="mb-3" style="text-align: center;">Our delivery blueprint</h2>
+            <div class="col-12">
+                
+                <div class="divider mb-4"></div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-6 col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mx-auto mb-3">1</div>
+                    <h3 style="color: var(--primary);">Brief</h3>
+                    <p>Goals, budget, preferred locations</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mx-auto mb-3">2</div>
+                    <h3 style="color: var(--primary);">Shortlist</h3>
+                    <p>Tailored listings, virtual tours</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mx-auto mb-3">3</div>
+                    <h3 style="color: var(--primary);">Negotiate</h3>
+                    <p>Competitive bidding, inspection</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="text-center">
+                    <div class="step-circle mx-auto mb-3">4</div>
+                    <h3 style="color: var(--primary);">Closed & beyond</h3>
+                    <p>Handover, rental management</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5 – ADVANTAGE BANNER (primary + secondary) -->
+    <section class="section">
+        <div class="row p-4 m-0 final-section">
+            <div class="col-lg-8">
+                <h3 class="text-white fw-bold"><i class="bi bi-patch-check-fill me-2"
+                        style="color: var(--secondary);"></i> Arock advantage</h3>
+                <p class="text-white mb-2" style="opacity: 0.95;">Exclusive inventory · 24/7 client portal · zero hidden
+                    fees. 100% compliance.</p>
+                <span
+                    style="background: var(--secondary); color: var(--black); padding: 14px 26px; border-radius: 6px; font-weight: 600; display: inline-block; margin-top: 8px;">14+
+                    years of excellence</span>
+            </div>
+            
+        </div>
+    </section>
+
+    <div id="side-footer"></div>
+    <script src="footer.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="header.js"></script>
+</body>
+
+</html>
