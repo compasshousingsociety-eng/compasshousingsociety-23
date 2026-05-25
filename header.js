@@ -5,7 +5,6 @@ const header = `
 
     <div class="container-fluid">
 
-      <!-- LOGO -->
       <a class="navbar-brand" href="index.html">
         <div class="logo-icon">
           <img src="images/colored-logo[1].png" alt="Compass Housing Society" width="40" height="40">
@@ -15,7 +14,6 @@ const header = `
         </div>
       </a>
 
-      <!-- MOBILE REGISTER BUTTON (Only visible on mobile) -->
       <div class="mobile-register-container d-lg-none">
           <a href="register.html" 
    class="btn btn-outline-light px-4 py-2 d-inline-flex align-items-center justify-content-center">
@@ -24,12 +22,10 @@ const header = `
 
       </div>
 
-      <!-- MOBILE TOGGLER (Only visible on mobile) -->
       <button class="navbar-toggler-custom d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="Toggle navigation">
           <div class="toggler-icon"></div>
       </button>
 
-      <!-- NAVBAR CONTENT -->
       <div class="collapse navbar-collapse" id="navbarContent">
         <ul class="navbar-nav mx-auto">
 
@@ -70,20 +66,18 @@ const header = `
           <li class="nav-item">
             <a class="nav-link-main" href="contact.html">Contact</a>
           </li>
-  <!-- MOBILE THEME TOGGLE (Only visible on mobile) -->
-        <div class="mobile-theme-toggle d-lg-none">
+  <div class="mobile-theme-toggle d-lg-none">
      <button 
   id="themeToggleMobile"
   style="border:2px solid white; background:transparent; color:white; 
          font-size:18px; padding:6px 10px; border-radius:50px; 
          cursor:pointer; display:flex; align-items:center; justify-content:center;">
   
-  <i class="bi bi-sun-fill" id="themeIconMobile" style="color:white;"></i>
+  <i class="bi bi-moon-fill" id="themeIconMobile" style="color:white;"></i>
 </button>
         </div>
         </ul>
 
-        <!-- DESKTOP RIGHT SECTION (Only visible on desktop) -->
         <div class="navbar-right-section d-none d-lg-flex">
         <button 
   id="themeToggleDesktop"
@@ -91,7 +85,7 @@ const header = `
          font-size:18px; padding:6px 10px; border-radius:50px; 
          cursor:pointer; display:flex; align-items:center; justify-content:center;">
   
-  <i class="bi bi-sun-fill" id="themeIconDesktop" style="color:white;"></i>
+  <i class="bi bi-moon-fill" id="themeIconDesktop" style="color:white;"></i>
 </button>
          <a href="register.html" 
    class="btn btn-outline-light px-4 py-2 d-inline-flex align-items-center justify-content-center">
@@ -379,7 +373,7 @@ function setTheme(theme) {
 
   toggleBtns.forEach(({ icon }) => {
     if (!icon) return;
-    icon.className = theme === "dark" ? "bi bi-moon-fill" : "bi bi-sun-fill";
+    icon.className = theme === "dark" ? "bi bi-sun-fill" : "bi bi-moon-fill";
   });
 }
 
