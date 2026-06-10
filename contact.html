@@ -863,7 +863,7 @@
             const emailValue = email.value.trim();
 
             // Email regex for domains: .com, .in, .org, .net
-            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.(com|in|org|net)$/i;
+            const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]{2,}\.(com|in|org|net)$/i;
 
             if (emailValue === '') {
                 email.classList.add('error');
