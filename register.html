@@ -878,7 +878,7 @@
             if (!email || email.trim() === '') return false;
             if (/\s/.test(email)) return false;
             if (email !== email.trim()) return false;
-            return /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]+\.(com|in|org|net)$/i.test(email);
+            return /^[a-zA-Z0-9._%+-]+@[a-zA-Z-]{2,}\.(com|in|org|net)$/i.test(email);
         }
 
         function validatePhone(phone) {
